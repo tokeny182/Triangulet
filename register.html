@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" crossorigin="anonymous" href="https://ac.blooket.com/dashclassic/assets/index-BQ9cjwWZ.css">
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/5GBHSTB/Triangulet-Game-Logo.png">/
+    <title>Register | Triangulet</title>
+  </head>
+
+  <body>
+    <div class="navigation-line"><a class="styles__blooketText___1pMBG-camelCase" href="/">Triangulet</a><a class="styles__headerRight___nPb83-camelCase" href="/login">Login</a></div>
+    <form class="center-square">
+      <div class="styles__containerHeader___19fyc-camelCase">Register</div>
+      <div class="styles__inputContainer___t9pz0-camelCase styles__inputFilled___3FO6M-camelCase">
+        <i class="styles__icon___358UQ-camelCase fas fa-user styles__iconFilled___1uSeW-camelCase" aria-hidden="true"></i>
+        <input class="styles__input___2XTSp-camelCase" id="username" placeholder="Username" type="text" autocomplete="username" maxlength="15" value="" fdprocessedid="2hrp7">
+      </div>
+      <div class="styles__inputContainer___t9pz0-camelCase styles__inputFilled___3FO6M-camelCase">
+        <i class="styles__icon___358UQ-camelCase fas fa-lock styles__iconFilled___1uSeW-camelCase" style="font-size: 23px;" aria-hidden="true"></i>
+        <input class="styles__input___2XTSp-camelCase" id="password" placeholder="Password" type="password" autocomplete="current-password" value="" fdprocessedid="6mp2xv">
+      </div>
+      <div class="styles__inputContainer___t9pz0-camelCase styles__inputFilled___3FO6M-camelCase">
+        <i class="styles__icon___358UQ-camelCase fas fa-lock styles__iconFilled___1uSeW-camelCase" style="font-size: 23px;" aria-hidden="true"></i>
+        <input class="styles__input___2XTSp-camelCase" id="accesskey" placeholder="Access Key" type="password" autocomplete="accesskey" value="" fdprocessedid="6mp2xv">
+      </div>
+      <button type="button" id="logbtn" onclick="login()" class="styles__button___2hNZo-camelCase styles__buttonFilled___23Dcn-camelCase">
+  Register
+</button>
+
+      <a class="styles__forgotLink___KkpPa-camelCase" href="/getkey">No AccessKey?</a>
+    </form>
+    <div class="styles__background___2J-JA-camelCase">
+      <div class="styles__blooksBackground___3oQ7Y-camelCase" style="background-image: url(&quot;https://i.ibb.co/d7GK1cC/background.png&quot;);  animation: animatedBackground 9s linear infinite;
+                                                                     -moz-animation: animatedBackground 9s linear infinite;
+                                                                     -webkit-animation: animatedBackground 9s linear infinite;
+                                                                     -ms-animation: animatedBackground 9s linear infinite;
+                                                                     -o-animation: animatedBackground 9s linear infinite;">
+      </div>
+    </div>
+    <script src="/themes.js"></script>
+<script>
+// credits to ducklife3141 for the encrypt/decrypt code
+  const existingUsername = localStorage.getItem("triangulet_username");
+  if (existingUsername) {
+    window.location.href = "/stats";
+  }
+
+  async function validateAccessKey(inputKey) {
+    const encryptedCode = "Ab0WpUhW/OgSb46Nw9yq2Jnd4uAqAcwMLyxSTErb3jzvMiNCrbat7OUr9ilzcB7E3w==";
+
+    function buftostr(e) {
+      return new Uint8Array(e).reduce((a, c) => a + String.fromCharCode(c), "");
+    }
+
+    function b64tobuf(e) {
+      return new Uint8Array(atob(e).split("").map(c => c.charCodeAt(0)));
+    }
+
+    async function deriveKey(password, iterations) {
+      const baseKey = await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(password),
+        "PBKDF2",
+        false,
+        ["deriveKey"]
+      );
+      return await crypto.subtle.deriveKey(
+        {
+          name: "PBKDF2",
+          hash: "SHA-256",
+          salt: new TextEncoder().encode("ben is a skid lmfao"),
+          iterations
+        },
+        baseKey,
+        { name: "AES-CBC", length: 256 },
+        true,
+        ["decrypt"]
+      );
+    }
+
+    async function decrypt(password, encrypted) {
+      const data = b64tobuf(encrypted);
+      const level = data[0];
+      const iv = data.subarray(1, 17);
+      const ciphertext = data.subarray(17);
+      const key = await deriveKey(password, [65536, 262144, 1048576, 16777216][level]);
+      const decrypted = await crypto.subtle.decrypt({ name: "AES-CBC", iv }, key, ciphertext);
+      return buftostr(decrypted);
+    }
+
+    try {
+      await decrypt(inputKey, encryptedCode);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  async function login() {
+    const username = document.getElementById("username").value.trim();
+    const accessKey = document.getElementById("accesskey").value.trim();
+
+    if (!username) {
+      alert("Please enter a username.");
+      return;
+    }
+
+    if (username.length > 15) {
+      alert("Username is too long. Maximum 15 characters allowed.");
+      return;
+    }
+
+    if (!accessKey) {
+      alert("Please enter an access key.");
+      return;
+    }
+
+    const validKey = await validateAccessKey(accessKey);
+    if (!validKey) {
+      alert("Invalid access key.");
+      return;
+    }
+
+    localStorage.setItem("triangulet_username", username);
+    window.location.href = "/stats";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    form.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        login();
+      }
+    });
+  });
+</script>
+
+
+  </body>
+
+</html>
