@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "news": [
+{
+      "_id": "kfhh98379yfhufhb",
+      "title": "TRIANGULET MIGHT COME BACK!!!",
+      "imageURL": "https://files.catbox.moe/lv5xy6.png",
+      "text": "Stay Tuned!",
+      "date": "2025-05-17T05:00:00.000Z"
+    },
+    {
+      "_id": "67eddd8fd943aa543a097622",
+      "title": "Triangulet Is Back!!! (sorta)",
+      "imageURL": "https://i.ibb.co/qyWscP8/hometrians.png",
+      "text": "Triangulet is back frfr (trust)",
+      "date": "2025-05-17T05:00:00.000Z"
+    },
+    {
+      "_id": "unique_id_here",
+      "title": "Triangulet Comeback?",
+      "imageURL": "https://i.ibb.co/tmyvyKH/image.webp",
+      "text": "New Triangulet website by PenguinPowers Himself\nUnfortunately it's already too late...\n⚠️ If it's back online then alert the Discord Server immediately ⚠️",
+      "date": "2024-10-24T00:00:00.000Z",
+      "link": "https://tri.pengpowers.xyz/",
+      "video": "https://www.youtube.com/embed/U-CQVm4UMnY?si=rNeXztDVt0V6J4LQ",
+      "discordLink": "https://discord.gg/8A6J234n7v"
+    }
+  ]
+}
