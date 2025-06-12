@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Login | Triangulet</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" crossorigin="anonymous" href="https://ac.blooket.com/dashclassic/assets/index-BQ9cjwWZ.css">
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/5GBHSTB/Triangulet-Game-Logo.png">
+  </head>
+
+  <body>
+    <div class="navigation-line"><a class="styles__blooketText___1pMBG-camelCase" href="/">Triangulet</a><a class="styles__headerRight___nPb83-camelCase" href="/register">Register</a></div>
+    <form class="center-square">
+      <div class="styles__containerHeader___19fyc-camelCase">Login</div>
+      <div class="styles__inputContainer___t9pz0-camelCase styles__inputFilled___3FO6M-camelCase">
+        <i class="styles__icon___358UQ-camelCase fas fa-user styles__iconFilled___1uSeW-camelCase" aria-hidden="true"></i>
+        <input id="username" class="styles__input___2XTSp-camelCase" placeholder="Username" type="text" autocomplete="username" maxlength="15" value="" fdprocessedid="x550f">
+      </div>
+      <div class="styles__inputContainer___t9pz0-camelCase styles__inputFilled___3FO6M-camelCase">
+        <i class="styles__icon___358UQ-camelCase fas fa-lock styles__iconFilled___1uSeW-camelCase" style="font-size: 23px;" aria-hidden="true"></i>
+        <input class="styles__input___2XTSp-camelCase" placeholder="Password" type="password" autocomplete="current-password" id="password" value="" fdprocessedid="vgyr8l">
+      </div>
+      <button type="button" id="logbtn" onclick="login()" class="styles__button___2hNZo-camelCase styles__buttonFilled___23Dcn-camelCase">
+  Login
+</button>
+
+
+    </form>
+    <div class="styles__background___2J-JA-camelCase">
+      <div class="styles__blooksBackground___3oQ7Y-camelCase" style="background-image: url(&quot;https://i.ibb.co/d7GK1cC/background.png&quot;);  animation: animatedBackground 9s linear infinite;
+                                                                     -moz-animation: animatedBackground 9s linear infinite;
+                                                                     -webkit-animation: animatedBackground 9s linear infinite;
+                                                                     -ms-animation: animatedBackground 9s linear infinite;
+                                                                     -o-animation: animatedBackground 9s linear infinite;"></div>
+    </div>
+    <script src="/themes.js"></script>
+<script>
+  const existingUsername = localStorage.getItem("triangulet_username");
+  if (existingUsername) {
+    window.location.href = "/stats";
+  }
+
+  function login() {
+    const username = document.getElementById("username").value.trim();
+
+    if (!username) {
+      alert("Please enter a username.");
+      return;
+    }
+
+    if (username.length > 15) {
+      alert("Username is too long. Maximum 15 characters allowed.");
+      return;
+    }
+
+    localStorage.setItem("triangulet_username", username);
+    window.location.href = "/stats";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    form.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        login();
+      }
+    });
+  });
+</script>
+
+
+  </body>
+
+</html>
